@@ -82,7 +82,7 @@ export default function OnboardingPage() {
       {/* Header */}
       <header className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center">
             <Heart className="w-4 h-4 text-white" />
           </div>
           <span className="text-lg font-bold gradient-text">Mindora</span>
@@ -102,7 +102,7 @@ export default function OnboardingPage() {
           {/* Step 0: Welcome */}
           {step === 0 && (
             <div className="text-center space-y-6">
-              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto shadow-glow-lg animate-float">
+              <div className="w-24 h-24 rounded-3xl bg-slate-800 flex items-center justify-center mx-auto shadow-glow-lg animate-float">
                 <Sparkles className="w-12 h-12 text-white" />
               </div>
               <div className="space-y-3">
@@ -148,8 +148,8 @@ export default function OnboardingPage() {
           {step === 2 && (
             <div className="space-y-6">
               <div className="text-center space-y-2">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center mx-auto">
-                  <Target className="w-7 h-7 text-indigo-600" />
+                <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto">
+                  <Target className="w-7 h-7 text-slate-700" />
                 </div>
                 <h2 className="text-2xl font-bold">{STEPS[2].title}</h2>
                 <p className="text-muted-foreground">{STEPS[2].subtitle}</p>
@@ -178,8 +178,8 @@ export default function OnboardingPage() {
           {step === 3 && (
             <div className="space-y-6">
               <div className="text-center space-y-2">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center mx-auto">
-                  <Bell className="w-7 h-7 text-indigo-600" />
+                <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto">
+                  <Bell className="w-7 h-7 text-slate-700" />
                 </div>
                 <h2 className="text-2xl font-bold">{STEPS[3].title}</h2>
                 <p className="text-muted-foreground">{STEPS[3].subtitle}</p>
@@ -218,7 +218,7 @@ export default function OnboardingPage() {
           {/* Step 4: Ready */}
           {step === 4 && (
             <div className="text-center space-y-6">
-              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto shadow-lg animate-float">
+              <div className="w-24 h-24 rounded-3xl bg-indigo-600 flex items-center justify-center mx-auto shadow-lg animate-float">
                 <Heart className="w-12 h-12 text-white" />
               </div>
               <div className="space-y-3">
@@ -259,7 +259,7 @@ export default function OnboardingPage() {
           <Button
             onClick={() => setStep((s) => s + 1)}
             disabled={!canNext}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90 gap-2"
+            className="bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97] gap-2"
           >
             Continue <ArrowRight className="w-4 h-4" />
           </Button>
@@ -267,7 +267,7 @@ export default function OnboardingPage() {
           <Button
             onClick={finish}
             disabled={loading}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90 gap-2"
+            className="bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97] gap-2"
           >
             {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Setting up…</> : <>Go to dashboard <ArrowRight className="w-4 h-4" /></>}
           </Button>

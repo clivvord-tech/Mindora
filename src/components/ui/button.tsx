@@ -4,22 +4,22 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.96]",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        default:     "bg-slate-800 text-white shadow-sm hover:bg-slate-700 hover:scale-[0.97]",
+        destructive: "bg-red-600 text-white shadow-sm hover:bg-red-500 hover:scale-[0.97]",
+        outline:     "border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-400 hover:scale-[0.97]",
+        secondary:   "bg-slate-100 text-slate-800 hover:bg-slate-200 hover:scale-[0.97]",
+        ghost:       "text-slate-600 hover:bg-slate-100 hover:text-slate-900 hover:scale-[0.97]",
+        link:        "text-indigo-600 underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-lg px-3",
-        lg: "h-11 rounded-xl px-8",
-        icon: "h-10 w-10",
+        sm:      "h-9 rounded-lg px-3",
+        lg:      "h-11 rounded-xl px-8",
+        icon:    "h-10 w-10",
       },
     },
     defaultVariants: { variant: "default", size: "default" },

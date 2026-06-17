@@ -108,7 +108,7 @@ function LoginForm() {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90"
+              className="w-full bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]"
               disabled={loading}
             >
               {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Signing in…</> : "Sign in"}

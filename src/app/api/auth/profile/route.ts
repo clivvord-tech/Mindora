@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSession } from "@/lib/session";
 import { updateUser } from "@/lib/db";
-import { createClient } from "@/lib/supabase/server";
 
 const schema = z.object({
   name: z.string().min(2).max(60).optional(),
@@ -20,12 +19,6 @@ export async function PUT(req: NextRequest) {
       ...(name && { name }),
       reminderTime: reminderTime ?? undefined,
     });
-
-    // Sync name to Supabase auth metadata
-    if (name) {
-      const supabase = await createClient();
-      await supabase.auth.updateUser({ data: { name } });
-    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

@@ -76,7 +76,7 @@ export default function MoodPage() {
         </div>
         <div className="flex gap-3 justify-center">
           <Button variant="outline" onClick={() => router.push("/dashboard")}>Go to Dashboard</Button>
-          <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90" onClick={() => router.push("/journal")}>
+          <Button className="bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]" onClick={() => router.push("/journal")}>
             Write in journal
           </Button>
         </div>
@@ -98,7 +98,7 @@ export default function MoodPage() {
           <span>{streakDays} day streak 🎉</span>
         </div>
         {insight && (
-          <Card className="border-indigo-100 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-card text-left">
+          <Card className="border-slate-100 bg-slate-50 shadow-card text-left">
             <CardContent className="p-5">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="w-4 h-4 text-indigo-500" />
@@ -111,7 +111,7 @@ export default function MoodPage() {
         <div className="flex gap-3 justify-center flex-wrap">
           <Button variant="outline" onClick={() => router.push("/dashboard")}>Back to Dashboard</Button>
           <Button
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90 gap-2"
+            className="bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97] gap-2"
             onClick={() => router.push("/chat")}
           >
             <span>Talk to Mira</span> <ArrowRight className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default function MoodPage() {
       <Button
         onClick={handleSubmit}
         disabled={!selected || loading}
-        className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90 h-11 text-base"
+        className="w-full bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97] h-11 text-base"
       >
         {loading ? (
           <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving & generating insight…</>

@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 
-// ─── PROFILE ──────────────────────────────────────────────────────────────────
+// ─── USER ──────────────────────────────────────────────────────────────────────
 export interface UserProfile {
   id: string;
   email: string;
@@ -19,13 +19,9 @@ export interface UserProfile {
 
 export async function getUser(userId: string): Promise<UserProfile | null> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", userId)
-    .single();
+  const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
   if (!data) return null;
-  return dbRowToProfile(data);
+  return rowToProfile(data);
 }
 
 export async function upsertUser(data: Partial<UserProfile> & { id: string; email: string }) {
@@ -63,21 +59,21 @@ export async function updateUser(userId: string, updates: Partial<UserProfile>) 
   await supabase.from("profiles").update(payload).eq("id", userId);
 }
 
-function dbRowToProfile(row: Record<string, unknown>): UserProfile {
+function rowToProfile(r: Record<string, unknown>): UserProfile {
   return {
-    id: row.id as string,
-    email: row.email as string,
-    name: row.name as string,
-    plan: (row.plan as "basic" | "plus" | "premium") ?? "basic",
-    onboardingComplete: (row.onboarding_complete as boolean) ?? false,
-    goals: (row.goals as string[]) ?? [],
-    reminderTime: row.reminder_time as string | undefined,
-    streakDays: (row.streak_days as number) ?? 0,
-    lastCheckIn: row.last_check_in as string | undefined,
-    stripeCustomerId: row.stripe_customer_id as string | undefined,
-    stripeSubscriptionId: row.stripe_subscription_id as string | undefined,
-    createdAt: row.created_at as string,
-    updatedAt: row.updated_at as string,
+    id: r.id as string,
+    email: r.email as string,
+    name: r.name as string,
+    plan: (r.plan as "basic" | "plus" | "premium") ?? "basic",
+    onboardingComplete: (r.onboarding_complete as boolean) ?? false,
+    goals: (r.goals as string[]) ?? [],
+    reminderTime: r.reminder_time as string | undefined,
+    streakDays: (r.streak_days as number) ?? 0,
+    lastCheckIn: r.last_check_in as string | undefined,
+    stripeCustomerId: r.stripe_customer_id as string | undefined,
+    stripeSubscriptionId: r.stripe_subscription_id as string | undefined,
+    createdAt: r.created_at as string,
+    updatedAt: r.updated_at as string,
   };
 }
 
@@ -96,59 +92,28 @@ export interface MoodRecord {
 
 export async function createMoodEntry(data: Omit<MoodRecord, "entryId" | "createdAt">) {
   const supabase = await createClient();
-  const now = new Date().toISOString();
   const { data: row, error } = await supabase
     .from("mood_entries")
-    .insert({
-      user_id: data.userId,
-      score: data.score,
-      emoji: data.emoji,
-      note: data.note ?? null,
-      ai_insight: data.aiInsight ?? null,
-      tags: data.tags,
-      date: data.date,
-      created_at: now,
-    })
-    .select()
-    .single();
+    .insert({ user_id: data.userId, score: data.score, emoji: data.emoji, note: data.note ?? null, ai_insight: data.aiInsight ?? null, tags: data.tags, date: data.date })
+    .select().single();
   if (error) throw error;
-  return dbRowToMood(row);
+  return rowToMood(row);
 }
 
 export async function getMoodEntries(userId: string, limit = 30): Promise<MoodRecord[]> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("mood_entries")
-    .select("*")
-    .eq("user_id", userId)
-    .order("date", { ascending: false })
-    .limit(limit);
-  return (data ?? []).map(dbRowToMood);
+  const { data } = await supabase.from("mood_entries").select("*").eq("user_id", userId).order("date", { ascending: false }).limit(limit);
+  return (data ?? []).map(rowToMood);
 }
 
 export async function getMoodByDate(userId: string, date: string): Promise<MoodRecord | null> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("mood_entries")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("date", date)
-    .maybeSingle();
-  return data ? dbRowToMood(data) : null;
+  const { data } = await supabase.from("mood_entries").select("*").eq("user_id", userId).eq("date", date).maybeSingle();
+  return data ? rowToMood(data) : null;
 }
 
-function dbRowToMood(row: Record<string, unknown>): MoodRecord {
-  return {
-    entryId: row.id as string,
-    userId: row.user_id as string,
-    score: row.score as number,
-    emoji: row.emoji as string,
-    note: row.note as string | undefined,
-    aiInsight: row.ai_insight as string | undefined,
-    tags: (row.tags as string[]) ?? [],
-    date: row.date as string,
-    createdAt: row.created_at as string,
-  };
+function rowToMood(r: Record<string, unknown>): MoodRecord {
+  return { entryId: r.id as string, userId: r.user_id as string, score: r.score as number, emoji: r.emoji as string, note: r.note as string | undefined, aiInsight: r.ai_insight as string | undefined, tags: (r.tags as string[]) ?? [], date: r.date as string, createdAt: r.created_at as string };
 }
 
 // ─── JOURNAL ───────────────────────────────────────────────────────────────────
@@ -169,42 +134,22 @@ export async function createJournalEntry(data: Omit<JournalRecord, "entryId" | "
   const now = new Date().toISOString();
   const { data: row, error } = await supabase
     .from("journal_entries")
-    .insert({
-      user_id: data.userId,
-      title: data.title,
-      content: data.content,
-      ai_reflection: data.aiReflection ?? null,
-      mood: data.mood ?? null,
-      tags: data.tags,
-      created_at: now,
-      updated_at: now,
-    })
-    .select()
-    .single();
+    .insert({ user_id: data.userId, title: data.title, content: data.content, ai_reflection: data.aiReflection ?? null, mood: data.mood ?? null, tags: data.tags, created_at: now, updated_at: now })
+    .select().single();
   if (error) throw error;
-  return dbRowToJournal(row);
+  return rowToJournal(row);
 }
 
 export async function getJournalEntries(userId: string, limit = 20): Promise<JournalRecord[]> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("journal_entries")
-    .select("*")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false })
-    .limit(limit);
-  return (data ?? []).map(dbRowToJournal);
+  const { data } = await supabase.from("journal_entries").select("*").eq("user_id", userId).order("created_at", { ascending: false }).limit(limit);
+  return (data ?? []).map(rowToJournal);
 }
 
 export async function getJournalEntry(userId: string, entryId: string): Promise<JournalRecord | null> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("journal_entries")
-    .select("*")
-    .eq("id", entryId)
-    .eq("user_id", userId)
-    .maybeSingle();
-  return data ? dbRowToJournal(data) : null;
+  const { data } = await supabase.from("journal_entries").select("*").eq("id", entryId).eq("user_id", userId).maybeSingle();
+  return data ? rowToJournal(data) : null;
 }
 
 export async function updateJournalEntry(userId: string, entryId: string, updates: Partial<JournalRecord>) {
@@ -223,18 +168,8 @@ export async function deleteJournalEntry(userId: string, entryId: string) {
   await supabase.from("journal_entries").delete().eq("id", entryId).eq("user_id", userId);
 }
 
-function dbRowToJournal(row: Record<string, unknown>): JournalRecord {
-  return {
-    entryId: row.id as string,
-    userId: row.user_id as string,
-    title: row.title as string,
-    content: row.content as string,
-    aiReflection: row.ai_reflection as string | undefined,
-    mood: row.mood as number | undefined,
-    tags: (row.tags as string[]) ?? [],
-    createdAt: row.created_at as string,
-    updatedAt: row.updated_at as string,
-  };
+function rowToJournal(r: Record<string, unknown>): JournalRecord {
+  return { entryId: r.id as string, userId: r.user_id as string, title: r.title as string, content: r.content as string, aiReflection: r.ai_reflection as string | undefined, mood: r.mood as number | undefined, tags: (r.tags as string[]) ?? [], createdAt: r.created_at as string, updatedAt: r.updated_at as string };
 }
 
 // ─── CHAT ──────────────────────────────────────────────────────────────────────
@@ -249,40 +184,20 @@ export interface ChatMessage {
 
 export async function saveChatMessage(data: Omit<ChatMessage, "messageId" | "createdAt">) {
   const supabase = await createClient();
-  const now = new Date().toISOString();
   const { data: row, error } = await supabase
     .from("chat_messages")
-    .insert({
-      user_id: data.userId,
-      role: data.role,
-      content: data.content,
-      session_id: data.sessionId,
-      created_at: now,
-    })
-    .select()
-    .single();
+    .insert({ user_id: data.userId, role: data.role, content: data.content, session_id: data.sessionId })
+    .select().single();
   if (error) throw error;
-  return dbRowToChat(row);
+  return rowToChat(row);
 }
 
 export async function getChatHistory(userId: string, limit = 50): Promise<ChatMessage[]> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("chat_messages")
-    .select("*")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false })
-    .limit(limit);
-  return (data ?? []).map(dbRowToChat).reverse();
+  const { data } = await supabase.from("chat_messages").select("*").eq("user_id", userId).order("created_at", { ascending: false }).limit(limit);
+  return (data ?? []).map(rowToChat).reverse();
 }
 
-function dbRowToChat(row: Record<string, unknown>): ChatMessage {
-  return {
-    messageId: row.id as string,
-    userId: row.user_id as string,
-    role: row.role as "user" | "assistant",
-    content: row.content as string,
-    sessionId: row.session_id as string,
-    createdAt: row.created_at as string,
-  };
+function rowToChat(r: Record<string, unknown>): ChatMessage {
+  return { messageId: r.id as string, userId: r.user_id as string, role: r.role as "user" | "assistant", content: r.content as string, sessionId: r.session_id as string, createdAt: r.created_at as string };
 }

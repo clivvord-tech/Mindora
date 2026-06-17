@@ -80,7 +80,7 @@ export default function InsightsPage() {
               variant={period === p ? "default" : "outline"}
               size="sm"
               onClick={() => setPeriod(p)}
-              className={period === p ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0" : "border-indigo-100"}
+              className={period === p ? "bg-slate-800 text-white hover:bg-slate-700" : "border-slate-200"}
             >
               {p.charAt(0).toUpperCase() + p.slice(1)}
             </Button>
@@ -111,10 +111,10 @@ export default function InsightsPage() {
         <>
           {/* AI Insight */}
           {insight && (
-            <Card className="border-purple-100 bg-gradient-to-br from-purple-50 via-indigo-50 to-white shadow-card">
+            <Card className="border-slate-100 bg-slate-50 shadow-card">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
                     <Sparkles className="w-4 h-4 text-white" />
                   </div>
                   <div>
@@ -135,7 +135,7 @@ export default function InsightsPage() {
               { label: "Check-ins", value: stats.totalEntries, sub: `This ${period.replace("ly","").replace("quarter","3 months")}` },
               { label: "Journal entries", value: stats.journalCount, sub: "Reflections written" },
             ].map(({ label, value, sub, icon }) => (
-              <Card key={label} className="border-indigo-50 shadow-card">
+              <Card className="border-slate-100 shadow-card">
                 <CardContent className="p-4">
                   <p className="text-xs text-muted-foreground">{label}</p>
                   <div className="flex items-center gap-2 mt-1">
@@ -149,7 +149,7 @@ export default function InsightsPage() {
           </div>
 
           {/* Line chart */}
-          <Card className="border-indigo-50 shadow-card">
+          <Card className="border-slate-100 shadow-card">
             <CardHeader className="pb-2">
               <CardTitle className="text-base">Mood over time</CardTitle>
             </CardHeader>
@@ -175,7 +175,7 @@ export default function InsightsPage() {
           </Card>
 
           {/* Bar chart — mood distribution */}
-          <Card className="border-indigo-50 shadow-card">
+          <Card className="border-slate-100 shadow-card">
             <CardHeader className="pb-2">
               <CardTitle className="text-base">Mood distribution</CardTitle>
             </CardHeader>

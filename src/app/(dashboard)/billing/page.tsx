@@ -68,16 +68,16 @@ function BillingContent() {
           <p className="text-muted-foreground text-sm">Manage your subscription and billing details.</p>
         </div>
         {currentPlan !== "basic" && (
-          <Button variant="outline" onClick={handlePortal} disabled={openingPortal} className="gap-2 border-indigo-100">
+          <Button variant="outline" onClick={handlePortal} disabled={openingPortal} className="gap-2 border-slate-200">
             {openingPortal ? <Loader2 className="w-4 h-4 animate-spin" /> : <ExternalLink className="w-4 h-4" />}
             Manage subscription
           </Button>
         )}
       </div>
 
-      <Card className="border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+      <Card className="border-slate-100 bg-slate-50">
         <CardContent className="p-5 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
             <CreditCard className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -102,11 +102,11 @@ function BillingContent() {
             <Card
               key={planKey}
               className={`relative border-2 shadow-card transition-all duration-200 ${
-                isPopular ? "border-indigo-400 shadow-glow" : isCurrent ? "border-green-300" : "border-indigo-50"
+                isPopular ? "border-slate-700 shadow-glow" : isCurrent ? "border-green-300" : "border-slate-100"
               }`}
             >
               {isPopular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> Most Popular
                 </div>
               )}
@@ -132,7 +132,7 @@ function BillingContent() {
                   ))}
                 </ul>
                 <Button
-                  className={`w-full ${isPopular && !isCurrent ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90" : ""}`}
+                  className={`w-full ${isPopular && !isCurrent ? "bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]" : ""}`}
                   variant={isCurrent ? "outline" : isPopular ? "default" : "outline"}
                   disabled={isCurrent || !!loadingPlan}
                   onClick={() => !isCurrent && handleSubscribe(planKey)}

@@ -157,7 +157,7 @@ function SignupForm() {
                 </div>
                 <PasswordStrength password={form.password} />
               </div>
-              <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90">
+              <Button type="submit" disabled={loading} className="w-full bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]">
                 {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Creating account…</> : "Create free account"}
               </Button>
               <p className="text-xs text-center text-muted-foreground">
@@ -181,7 +181,7 @@ function SignupForm() {
                   autoComplete="one-time-code"
                 />
               </div>
-              <Button type="submit" disabled={loading || code.length < 6} className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90">
+              <Button type="submit" disabled={loading || code.length < 6} className="w-full bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]">
                 {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Verifying…</> : "Verify email"}
               </Button>
               <Button type="button" variant="ghost" className="w-full text-sm" onClick={handleResend} disabled={resending}>

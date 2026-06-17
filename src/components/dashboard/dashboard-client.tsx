@@ -76,7 +76,7 @@ export function DashboardClient({ user, todayMood, avgMood, streakDays, recentMo
         </div>
         {!todayMood && (
           <Link href="/mood">
-            <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90 gap-2">
+            <Button className="bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97] gap-2">
               <Plus className="w-4 h-4" /> Check in now
             </Button>
           </Link>
@@ -85,10 +85,10 @@ export function DashboardClient({ user, todayMood, avgMood, streakDays, recentMo
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={Flame} label="Day streak" value={streakDays} sub="Keep it up!" color="bg-orange-400" />
-        <StatCard icon={Heart} label="Avg mood" value={avgMood > 0 ? `${avgMood}/5` : "—"} sub="Last 30 days" color="bg-indigo-500" />
-        <StatCard icon={BookOpen} label="Journal entries" value={recentJournals.length} sub="This month" color="bg-purple-500" />
-        <StatCard icon={MessageCircle} label="Chats with Mira" value={chatCount} sub="Recent messages" color="bg-violet-500" />
+        <StatCard icon={Flame} label="Day streak" value={streakDays} sub="Keep it up!" color="bg-slate-700" />
+        <StatCard icon={Heart} label="Avg mood" value={avgMood > 0 ? `${avgMood}/5` : "—"} sub="Last 30 days" color="bg-indigo-600" />
+        <StatCard icon={BookOpen} label="Journal entries" value={recentJournals.length} sub="This month" color="bg-slate-600" />
+        <StatCard icon={MessageCircle} label="Chats with Mira" value={chatCount} sub="Recent messages" color="bg-indigo-500" />
       </div>
 
       {/* Mood Chart */}
@@ -199,7 +199,7 @@ export function DashboardClient({ user, todayMood, avgMood, streakDays, recentMo
       </div>
 
       {/* Quick actions */}
-      <Card className="border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 shadow-card">
+      <Card className="border-slate-100 bg-slate-50/60 shadow-card">
         <CardContent className="p-5">
           <div className="flex items-center gap-2 mb-4">
             <Sparkles className="w-5 h-5 text-indigo-500" />
@@ -207,13 +207,13 @@ export function DashboardClient({ user, todayMood, avgMood, streakDays, recentMo
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { href: "/chat", icon: MessageCircle, label: "Chat with Mira", color: "bg-indigo-500" },
-              { href: "/mood", icon: Heart, label: "Log mood", color: "bg-pink-500" },
-              { href: "/journal", icon: BookOpen, label: "Write journal", color: "bg-purple-500" },
-              { href: "/insights", icon: TrendingUp, label: "View insights", color: "bg-violet-500" },
+              { href: "/chat", icon: MessageCircle, label: "Chat with Mira", color: "bg-indigo-600" },
+              { href: "/mood", icon: Heart, label: "Log mood", color: "bg-slate-700" },
+              { href: "/journal", icon: BookOpen, label: "Write journal", color: "bg-slate-600" },
+              { href: "/insights", icon: TrendingUp, label: "View insights", color: "bg-indigo-500" },
             ].map(({ href, icon: Icon, label, color }) => (
               <Link key={href} href={href}>
-                <div className="flex flex-col items-center gap-2 p-4 bg-white rounded-xl border border-indigo-100 hover:shadow-md transition-all cursor-pointer group">
+                <div className="flex flex-col items-center gap-2 p-4 bg-white rounded-xl border border-slate-100 hover:shadow-md transition-all cursor-pointer group">
                   <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                     <Icon className="w-5 h-5 text-white" />
                   </div>

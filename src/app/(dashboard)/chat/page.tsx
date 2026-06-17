@@ -41,15 +41,15 @@ function Message({ msg }: { msg: ChatMessageUI }) {
   return (
     <div className={cn("flex gap-3 px-4 py-1", isUser ? "flex-row-reverse" : "flex-row")}>
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+        <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
           <Heart className="w-4 h-4 text-white" />
         </div>
       )}
       <div className={cn(
         "max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm",
         isUser
-          ? "bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-tr-sm"
-          : "bg-white border border-indigo-50 text-foreground rounded-tl-sm"
+          ? "bg-slate-800 text-white rounded-tr-sm"
+          : "bg-white border border-slate-100 text-foreground rounded-tl-sm"
       )}>
         {msg.content.split("\n").map((line, i) => (
           <span key={i}>
@@ -170,9 +170,9 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] lg:h-[calc(100vh-80px)] max-w-3xl mx-auto -mt-4 sm:-mt-6 lg:-mt-8 animate-fade-in">
       {/* Chat header */}
-      <div className="flex items-center gap-3 px-4 sm:px-0 py-4 border-b border-indigo-50 flex-shrink-0">
+      <div className="flex items-center gap-3 px-4 sm:px-0 py-4 border-b border-slate-100 flex-shrink-0">
         <div className="relative">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-sm">
+          <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center shadow-sm">
             <Heart className="w-5 h-5 text-white" />
           </div>
           <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
@@ -196,8 +196,8 @@ export default function ChatPage() {
       </div>
 
       {/* Disclaimer */}
-      <div className="bg-amber-50 border-b border-amber-100 px-4 py-2 text-xs text-amber-700 flex-shrink-0">
-        Mira is an AI companion, not a licensed therapist. In crisis? <a href="tel:988" className="underline font-semibold">Call/text 988</a>
+      <div className="bg-slate-50 border-b border-slate-100 px-4 py-2 text-xs text-slate-500 flex-shrink-0">
+        Mira is an AI companion, not a licensed therapist. In crisis? <a href="tel:988" className="underline font-semibold text-red-600">Call/text 988</a>
       </div>
 
       {/* Messages */}
@@ -218,7 +218,7 @@ export default function ChatPage() {
                     <button
                       key={s}
                       onClick={() => { setInput(s); textareaRef.current?.focus(); }}
-                      className="text-left text-sm bg-white border border-indigo-100 rounded-xl px-3 py-2.5 hover:bg-indigo-50 hover:border-indigo-200 transition-colors"
+                      className="text-left text-sm bg-white border border-slate-100 rounded-xl px-3 py-2.5 hover:bg-slate-50 hover:border-slate-200 transition-all hover:scale-[0.98]"
                     >
                       {s}
                     </button>
@@ -235,7 +235,7 @@ export default function ChatPage() {
       {showCrisis && <CrisisAlert onDismiss={() => setShowCrisis(false)} />}
 
       {/* Input area */}
-      <div className="border-t border-indigo-50 p-4 flex-shrink-0 bg-white/80 backdrop-blur-sm">
+      <div className="border-t border-slate-100 p-4 flex-shrink-0 bg-white/80 backdrop-blur-sm">
         <div className="flex gap-3 items-end">
           <Textarea
             ref={textareaRef}
@@ -252,7 +252,7 @@ export default function ChatPage() {
           <Button
             onClick={sendMessage}
             disabled={!input.trim() || loading}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90 flex-shrink-0 h-10 w-10 p-0"
+            className="bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97] flex-shrink-0 h-10 w-10 p-0"
             aria-label="Send message"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
