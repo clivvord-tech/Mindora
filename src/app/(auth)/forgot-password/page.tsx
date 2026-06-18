@@ -65,44 +65,50 @@ export default function ForgotPasswordPage() {
   return (
     <div className="w-full max-w-md space-y-6 animate-fade-in">
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold">{step === "email" ? "Forgot password?" : "Reset your password"}</h1>
-        <p className="text-muted-foreground text-sm">
+        <h1 className="text-2xl font-bold text-slate-900">
+          {step === "email" ? "Forgot password?" : "Reset your password"}
+        </h1>
+        <p className="text-slate-500 text-sm">
           {step === "email" ? "Enter your email and we'll send a reset code." : `Enter the code sent to ${email}`}
         </p>
       </div>
 
-      <Card className="border-indigo-100 shadow-card">
+      <Card className="border-slate-200 shadow-card">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg">{step === "email" ? "Send reset code" : "Set new password"}</CardTitle>
-          <CardDescription>{step === "email" ? "We'll send a 6-digit code to your email." : "Enter the code and your new password."}</CardDescription>
+          <CardTitle className="text-lg text-slate-900">
+            {step === "email" ? "Send reset code" : "Set new password"}
+          </CardTitle>
+          <CardDescription className="text-slate-500">
+            {step === "email" ? "We'll send a 6-digit code to your email." : "Enter the code and your new password."}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {step === "email" ? (
             <form onSubmit={handleSendCode} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email address</Label>
-                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required className="border-indigo-100" />
+                <Label htmlFor="email" className="text-slate-700">Email address</Label>
+                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required className="border-slate-200 focus:border-slate-400" />
               </div>
-              <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90">
+              <Button type="submit" disabled={loading} className="w-full bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]">
                 {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Sending…</> : "Send reset code"}
               </Button>
             </form>
           ) : (
             <form onSubmit={handleReset} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="code">6-digit code</Label>
-                <Input id="code" value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="123456" maxLength={6} required className="border-indigo-100 text-center text-xl tracking-widest font-mono" />
+                <Label htmlFor="code" className="text-slate-700">6-digit code</Label>
+                <Input id="code" value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="123456" maxLength={6} required className="border-slate-200 text-center text-xl tracking-widest font-mono focus:border-slate-400" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">New password</Label>
+                <Label htmlFor="password" className="text-slate-700">New password</Label>
                 <div className="relative">
-                  <Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New strong password" required className="border-indigo-100 pr-10" />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                  <Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New strong password" required className="border-slate-200 focus:border-slate-400 pr-10" />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors">
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
-              <Button type="submit" disabled={loading || code.length < 6 || password.length < 8} className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 hover:opacity-90">
+              <Button type="submit" disabled={loading || code.length < 6 || password.length < 8} className="w-full bg-slate-800 text-white hover:bg-slate-700 hover:scale-[0.97]">
                 {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Resetting…</> : "Reset password"}
               </Button>
             </form>
@@ -110,8 +116,8 @@ export default function ForgotPasswordPage() {
         </CardContent>
       </Card>
 
-      <p className="text-center text-sm text-muted-foreground">
-        <Link href="/login" className="text-indigo-600 hover:underline inline-flex items-center gap-1">
+      <p className="text-center text-sm text-slate-500">
+        <Link href="/login" className="hover:text-slate-800 inline-flex items-center gap-1 transition-colors">
           <ArrowLeft className="w-3 h-3" /> Back to sign in
         </Link>
       </p>
