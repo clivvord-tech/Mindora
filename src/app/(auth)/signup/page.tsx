@@ -66,8 +66,22 @@ function SignupForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-      setStep("verify");
-      toast({ title: "Check your email!", description: "We sent a 6-digit code to " + form.email });
+
+      if (data.confirmed) {
+        // Email confirmation disabled — log in immediately
+        const loginRes = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: form.email, password: form.password }),
+        });
+        const loginData = await loginRes.json();
+        if (!loginRes.ok) throw new Error(loginData.error);
+        router.push(loginData.user?.onboardingComplete ? "/dashboard" : "/onboarding");
+      } else {
+        // Email confirmation enabled — show verify step
+        setStep("verify");
+        toast({ title: "Check your email!", description: "We sent a verification code to " + form.email });
+      }
     } catch (err: unknown) {
       toast({ title: "Sign up failed", description: err instanceof Error ? err.message : "Please try again.", variant: "destructive" });
     } finally {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { upsertUser } from "@/lib/db";
 
 const schema = z.object({
   email: z.string().email(),
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
     const { email, password, name } = schema.parse(body);
 
     const supabase = await createClient();
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { name } },
@@ -29,7 +30,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true, message: "Check your email for a verification link." });
+    // If email confirmation is disabled, the session is created immediately
+    // data.session will be non-null and user will be confirmed
+    const confirmed = !!data.session || !!data.user?.confirmed_at;
+
+    if (confirmed && data.user) {
+      await upsertUser({ id: data.user.id, email, name });
+      return NextResponse.json({ success: true, confirmed: true });
+    }
+
+    // Email confirmation is enabled — user needs to verify
+    return NextResponse.json({ success: true, confirmed: false });
   } catch (err) {
     if (err instanceof z.ZodError) return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
     console.error("[signup]", err);
